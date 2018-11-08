@@ -23,7 +23,7 @@ class Train_Model():
 		yield batch_features, batch_labels
 
 
-	def train_model(self,file_path,learning_rate):
+	def train_model(self,model, model_param_dict,data):
 
 		#the optimizer is what changes the weights and biases during training
 		#loss is the function to calculate the error
