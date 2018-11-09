@@ -53,11 +53,11 @@ def main():
     ###########################################################################
     #Create Model
     print('Creating the model ... ')
-    cm.create_model(df['keep_prob'][0])
+    model = cm.create_model(df['keep_prob'][0])
     ###########################################################################
     #Train Model
     print('Begin training the model ...')
-    tm.train_model(checkpoint_file_path,df,data)
+    tm.train_model(checkpoint_file_path,model,df,data)
 
 
 
