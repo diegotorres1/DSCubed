@@ -23,13 +23,13 @@ class Train_Model():
 		yield batch_features, batch_labels
 
 
-	def train_model(self,model, model_param_dict,data):
+	def train_model(self,checkpoint_file_path,model, model_param_dict,data):
 
 		#the optimizer is what changes the weights and biases during training
 		#loss is the function to calculate the error
 		#######################################################################
 		model.compile(
-			optimizer = Adam(learning_rate),\
+			optimizer = Adam(model_param_dict['learning_rate'][0]),\
 			loss = 'mean_squared_error',\
 			metrics = ['accuracy']
 		)
@@ -43,7 +43,7 @@ class Train_Model():
 		#mode matches value loss
 		#######################################################################
 		checkpoint = ModelCheckpoint(
-			filepath = file_path,
+			filepath = checkpoint_file_path,
 			monitor = 'value_loss',
 			verbose = 1,
 			save_best_only = True,
@@ -53,15 +53,16 @@ class Train_Model():
 
 
 		#generator makes batches of samples
-		#the batch samples are configured by the number of epochs and the batch sizess
+		#the batch samples are configured by the number of epochs and the batch sizes
+        #Need to define features, labels, batch_size
 		model.fit_generator(
 			generator(
-				features,
-				labels,
-				batch_size
+				model_param_dict['features'][0],
+				model_param_dict['labels'][0],
+				model_param_dict['batch_size'][0]
 			),
-			samples_per_epoch = samples_per_epoch,
-			nb_epoch = number_epoch,
+			samples_per_epoch = model_param_dict['samples_per_epoch'][0],
+			nb_epoch = model_param_dict['number_epoch'][0],
 			verbose = 1,
 			callbacks = [checkpoint]
 		)
