@@ -1,8 +1,26 @@
 #Author: Diego Torres
 #Date Modification : 10/20/2018
 #Description : This function will return sequential model
+import pandas as pd # data analysis toolkit - create, read, update, delete datasets
+import numpy as np #matrix math
+from sklearn.model_selection import train_test_split #to split out training and testing data
+#keras is a high level wrapper on top of tensorflow (machine learning library)
+#The Sequential container is a linear stack of layers
+from keras.models import Sequential
+#popular optimization strategy that uses gradient descent
+from keras.optimizers import Adam
+#to save our model periodically as checkpoints for loading later
+from keras.callbacks import ModelCheckpoint
+#what types of layers do we want our model to have?
+from keras.layers import Lambda, Conv2D, MaxPooling2D, Dropout, Dense, Flatten
+#helper class to define input shape and generate training images given image paths & steering angles
+from utils import INPUT_SHAPE, batch_generator
+#for command line arguments
+import argparse
+#for reading files
+import os
 class Create_Model():
-	def __init__():
+	def __init__(self):
 		print('Create_Model is created')
 	def create_model(self,keep_prob):
 		#Models in Keras can come in two forms Sequential and Functional API
@@ -11,7 +29,7 @@ class Create_Model():
 		#######################################################################
 		model = Sequential()
 		#lambda layers are used to define custom layers
-		model.add(Lambda(lambda x : (x/127.5) - 1.0), input_shape = INPUT)
+		model.add(Lambda(lambda x : (x/127.5) - 1.0, input_shape = INPUT_SHAPE))
 		#######################################################################
 
 		#Convolutional Kernel applied to the input layer
