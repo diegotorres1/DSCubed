@@ -1,2 +1,2 @@
 test_size,keep_prob,nb_epoch,samples_per_epoch,batch_size,save_best_only,learning_rate,checkpoint_path
-0.2,0.5,10,200,40,TRUE,0.0001,model/
+0.2,0.5,10,600,20,TRUE,0.00001,model/
