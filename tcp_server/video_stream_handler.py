@@ -3,7 +3,7 @@
 #Description : Server is placed in computer
 import socketserver
 class video_stream_handler(socketserver.StreamRequestHandler):
-    def handle():
+    def handle(self):
         recv_size = 1024
         print('video_stream_handler : HANDLE YES')
         try:

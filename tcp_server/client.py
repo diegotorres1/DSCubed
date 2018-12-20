@@ -17,7 +17,7 @@ class client():
                 time.sleep()
                 #create streams
                 stream = io.BytesIO()
-                for frame in cam.capture_continuous(stream,'jpeg',use_video_port = True)
+                for frame in cam.capture_continuous(stream,'jpeg',use_video_port = True):
                     connection.write(struct.pack('<L',stream.tell()))
                     connection.flush()
                     #find the start of the stream
@@ -27,5 +27,6 @@ class client():
                     stream.truncate()
             connection.write(struct.pack('<L', 0))
         finally:
+            print('Connection is closed')
             connection.close()
             client_socket.close()
