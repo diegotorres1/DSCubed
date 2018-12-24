@@ -2,9 +2,11 @@
 #Date Modification : 10/20/2018
 #Description : Server is placed in computer
 import socketserver
+import cv2 as cv2
 class video_stream_handler(socketserver.StreamRequestHandler):
     def handle(self):
         recv_size = 1024
+        stream_bytes = b''
         print('video_stream_handler : HANDLE YES')
         try:
             print('Connection')
