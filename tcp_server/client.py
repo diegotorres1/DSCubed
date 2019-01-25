@@ -19,11 +19,14 @@ class client():
                 stream = io.BytesIO()
                 for frame in cam.capture_continuous(stream,'jpeg',use_video_port = True):
                     connection.write(struct.pack('<L',stream.tell()))
+                    #tell() return the current position of the stream
+                    #format specification mini language for long int, align to the left
                     connection.flush()
-                    #find the start of the stream
+                    #change the stream position to the start of the stream, default 0
                     stream.seek(0)
                     connection.write(stream.read())
                     stream.seek(0)
+                    #resize the stream to the current position effectivley wiping the current stream
                     stream.truncate()
             connection.write(struct.pack('<L', 0))
         finally:

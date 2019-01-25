@@ -3,6 +3,8 @@
 #Description : Server is placed in computer
 import socketserver
 import cv2 as cv2
+import time
+import numpy as np
 class video_stream_handler(socketserver.StreamRequestHandler):
     def handle(self):
         recv_size = 1024
@@ -17,15 +19,21 @@ class video_stream_handler(socketserver.StreamRequestHandler):
                 first = stream_bytes.find(b'\xff\xd8')
                 last =  stream_bytes.find(b'\xff\xd9')
                 if (first != -1 and last != -1):
-                    i = stream_bytes[first:(last + 2)]
+                    print('stream')
+                    i = stream_bytes[first:last + 2]
                     #move the stream bytes to the next image
-                    stream_bytes = stream_bytes[last + 2]
-                    image = cv2.imdecode(np.fromstring(i,dtype = np.uint8),cv2.CV_LOAD_IMAGE_UNCHANGED)
+                    stream_bytes = stream_bytes[last + 2:]
+                    #returns an image from a buffer in memory
+                    #np.fromstring A new 1-D array initialized from text data from string
+                    image = cv2.imdecode(np.fromstring(i,dtype = np.uint8),cv2.IMREAD_GRAYSCALE)
                     cv2.imshow('stream',image)
                     if(cv2.waitKey(33) == 27):
                         print('Stream stopped')
                         break
 
+        except Exception as e:
+            print(e)
         finally:
+            print('Windows Destroyed')
             cv2.destroyAllWindows()
             return 0
