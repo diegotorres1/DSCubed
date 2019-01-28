@@ -23,7 +23,7 @@ class video_stream_handler(socketserver.StreamRequestHandler):
                     i = stream_bytes[first:last + 2]
                     #move the stream bytes to the next image
                     stream_bytes = stream_bytes[last + 2:]
-                    #returns an image from a buffer in memory
+                    #reads an image from a buffer in memory
                     #np.fromstring A new 1-D array initialized from text data from string
                     image = cv2.imdecode(np.fromstring(i,dtype = np.uint8),cv2.IMREAD_GRAYSCALE)
                     cv2.imshow('stream',image)

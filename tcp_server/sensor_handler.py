@@ -1,4 +1,8 @@
-class sensor_handler(socketserver.BaseRequestHandler):
+import socketserver
+import time
+import numpy as np
+import cv2 as cv2
+class sensor_handler(socketserver.StreamRequestHandler):
     def handle(self):
         recv_size = 1024
         stream_bytes = b''
@@ -14,12 +18,13 @@ class sensor_handler(socketserver.BaseRequestHandler):
                 if (first != -1 and last != -1):
                     #the plus 2 is from the '<2'
 
-                    i = stream_bytes[first:last + 2]
-                    stream_bytes = stream_bytes[last + 2:]
-                    values = np.fromstring(i,dtype = np.uint8)
+                    i = stream_bytes[first + len(b'sensor_start'):last]
+                    stream_bytes = stream_bytes[last + len(b'sensor_end'):]
+                    print(str(i))
+                    values = np.fromstring(i,dtype = np.float)
 
                     try:
-                        print('Voltage_1:' + values[0])
+                        print('Voltage_1:' + str(values))
                     except Exception as e:
                         print(e)
                         print('Voltage_1 was incorrectly read, ' + str(values))

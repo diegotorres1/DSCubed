@@ -1,6 +1,6 @@
 from server import server
 def main():
-    server_ip = '192.168.0.13'
+    server_ip = '192.168.1.14'
     # server_ip = '169.234.47.26'
     sensor_port = 8005
     video_port = 8006
