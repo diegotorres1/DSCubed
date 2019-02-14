@@ -1,5 +1,7 @@
 from client import client
 import argparse
+import sys
+sys.path.insert(0, '../')
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('-svip',default = '192.168.0.13',type = str, dest = 'server_ip',help = 'server_ip string')
