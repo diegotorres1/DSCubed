@@ -7,6 +7,22 @@ and (Raspberry Pi vehicle 2 Computer Station server).
 There are three sections. Steering Model, Image Classification Model, and Raspberry Pi TCP Server.
 
 
+## Quick Start
+Run the command command_central with optional arguments -sip, -vp, -sp, which configures the server interal ip, the video port on the server, and the sensor port on the server. Configure for your respective network. Ensure that the picamera is configured beforehand.
+
+
+Server Side (Your PC) run
+```bash
+python command_central.py -sip '192.168.0.13' -vp '8006' -sp '8005'
+```
+
+Client Side (raspberry Pi) run
+
+```bash
+python client_test.py -sip '192.168.0.13' -vp '8006' -sp '8005'
+```
+Ensure that the port numbers match on both the client and the server.
+
 ## Steering Model
 
 The steering model is based on [Nvidia's model](https://devblogs.nvidia.com/deep-learning-self-driving-cars/) which explains the architecture of their design. This model was implemented using Keras.
@@ -31,8 +47,8 @@ Nvidia GTX 1080ti
 took hours.
 
 ## Object recognition
-
+The object recongition uses Haar Cascade Models, for both stoplights and stopsigns. Uses detectMultiscale function to find features from the models.
 
 ## Raspberry Pi TCP Server
 
-The TCP server is loaded onto a Raspberry to communicate to the control center(PC) to the RC Vehicle. The server will stream visual data to the computer, the computer will then send control signals back to the vehicle. 
+The TCP server is loaded onto a Raspberry to communicate to the control center(PC) to the RC Vehicle. The server will stream visual data to the computer, the computer will then send control signals back to the vehicle. The control signals are sent over bluetooth communication that is built into the Raspberry Pi 3 B. 
