@@ -11,32 +11,19 @@ class server():
     def __init__(self,server_ip, video_port, sensor_port):
         self.video_port = video_port
         self.sensor_port = sensor_port
-
-        ##Data transfer privates
-        self.recieve_str = ''
-        self.transmit_str = ''
-
-
         #Create a thread to handle the throughput for both the video and the sensor information
         s_thread = threading.Thread(target=self.sensor_stream, args=(server_ip,sensor_port))
         s_thread.daemon = True
         s_thread.start()
-
-
-        v_thread = threading.Thread(target=self.video_stream, args=(server_ip,video_port))
-        v_thread.daemon = True
-        v_thread.start()
-
-
+        self.video_stream(server_ip,video_port)
         # v_thread.daemon = True
+
         print('server has started')
 
     def video_stream(self,server_ip,video_port):
-
         print('video_stream thread')
         vs_socket = socketserver.TCPServer((server_ip,video_port),video_stream_handler)
         vs_socket.serve_forever()
-
 
     def sensor_stream(self,server_ip,sensor_port):
         print('sensor_stream thread')

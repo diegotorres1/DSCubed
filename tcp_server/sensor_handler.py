@@ -9,4 +9,12 @@ class sensor_handler(socketserver.BaseRequestHandler):
         while self.data:
             self.data = self.request.recv(1024)
             # print "{} sent:".format(self.client_address[0])
-            print(self.data)
+            bool = True
+            while(bool):
+                try:
+                    with open('data_transfer_files/recieve_s.txt','w') as f:
+                        data = f.write(self.data)
+                    f.close()
+                    bool = False
+                except:
+                    pass
